@@ -1,10 +1,10 @@
-require 'pivotal_git_scripts/git_pair'
+require 'pivotal_git_scripts/git_collab'
 
-describe PivotalGitScripts::GitPair::Runner do
+describe PivotalGitScripts::GitCollab::Runner do
   let(:runner) { described_class.new }
 
   describe 'set_git_config' do
-    it 'calls git config with pairs in the options' do
+    it 'calls git config with collabs in the options' do
       runner.should_receive(:system).with('git config user.foo "bar baz"')
 
       runner.set_git_config(false, 'foo' => 'bar baz')
@@ -16,7 +16,7 @@ describe PivotalGitScripts::GitPair::Runner do
       runner.set_git_config(false, 'foo' => nil)
     end
 
-    it 'can handle multiple pairs in a hash' do
+    it 'can handle multiple collabs in a hash' do
       runner.should_receive(:system).with('git config --unset user.remove')
       runner.should_receive(:system).with('git config user.ten "10"')
 
@@ -33,7 +33,7 @@ describe PivotalGitScripts::GitPair::Runner do
   describe 'read_author_info_from_config' do
     it 'maps from the initials to the full name' do
       config = {
-        'pairs' => {
+        'collabs' => {
           'aa' => 'An Aardvark',
           'tt' => 'The Turtle'
         }
@@ -45,8 +45,8 @@ describe PivotalGitScripts::GitPair::Runner do
 
     it 'exits when initials cannot be found' do
       expect {
-        runner.read_author_info_from_config({"pairs" => {}}, ['aa'])
-      }.to raise_error(PivotalGitScripts::GitPair::GitPairException)
+        runner.read_author_info_from_config({"collabs" => {}}, ['aa'])
+      }.to raise_error(PivotalGitScripts::GitCollab::GitCollabException)
     end
   end
 end

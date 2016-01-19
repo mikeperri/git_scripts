@@ -14,67 +14,67 @@ These scripts are helpers for managing developer workflow when using git repos h
 
 ## git-about
 
-`git about` shows settings set by `git pair` and `git project`
+`git about` shows settings set by `git collab` and `git project`
 
-## git-pair
+## git-collab
 
-Configures git authors when pair programming.
+Configures git authors when collab programming.
 
-    git pair sp js
+    git collab sp js
     user.name=Josh Susser & Sam Pierson
-    user.email=pair+jsusser+sam@pivotallabs.com
+    user.email=collab+jsusser+sam@pivotallabs.com
 
 
-Create a `.pairs` config file in project root or your home folder.
+Create a `.collabs` config file in project root or your home folder.
 
-    # .pairs - configuration for 'git pair'
-    pairs:
+    # .collabs - configuration for 'git collab'
+    collabs:
       # <initials>: <Firstname> <Lastname>[; <email-id>]
       eh: Edward Hieatt
       js: Josh Susser; jsusser
       sf: Serguei Filimonov; serguei
     email:
-      prefix: pair
+      prefix: collab
       domain: pivotallabs.com
       no_solo_prefix: true
-    global: false  # Set to true for git-pair to change git configuration for all your projects
+    global: false  # Set to true for git-collab to change git configuration for all your projects
 
 
 By default this affects the current project (`.git/config`).
-Use the `--global` option or add `global: true` to your `.pairs` file to set the global git configuration for all projects (`~/.gitconfig`).
+Use the `--global` option or add `global: true` to your `.collabs` file to set the global git configuration for all projects (`~/.gitconfig`).
 
 Options are:
 
     -g, --global                     Modify global git options instead of local
     -v, --version                    Show Version
     -h, --help                       Show this.
-    
-When you're done pairing, change git's configuration to use your personal details.
 
-    git pair <your-initials>
+When you're done collabing, change git's configuration to use your personal details.
 
-## git-pair-commit
+    git collab <your-initials>
 
-Makes a git commit as normal, but chooses one of the pair members randomly to get credit for the commit on github (by setting the author email to that member's email address). The author name on the commit will list all members of the pair, as usual.
+## git-collab-commit
 
-If pair members have email addresses on different domains, you can specify them separately in your `.pairs` file.
+Makes a git commit as normal, but chooses one of the collab members randomly to get credit for the commit on github (by setting the author email to that member's email address). The author name on the commit will list all members of the collab, as usual.
 
-    pairs:
+If collab members have email addresses on different domains, you can specify them separately in your `.collabs` file.
+
+    collabs:
       jd: Jane Doe
       fb: Frances Bar
     email_addresses:
       jd: jane@awesome.local
       fb: frances@foo.bar
 
-### Using git-pair-commit in RubyMine
+### Using git-collab-commit in RubyMine
 RubyMine already supports pointing at a custom location for your git executable in the Preferences -> Version Control -> Git
 ![screen shot 2014-03-11 at 12 49 02 pm](https://f.cloud.github.com/assets/163532/2390097/49c3023e-a956-11e3-8aeb-dcba1a814309.png)
-The trick then is that `pair-commit` doesn't encompass all git functionality, so you can't just point RubyMine directly at it, you need something in the middle that will use `pair-commit` if the first arg is `commit`, otherwise just pass through. Here's a ruby script to do just that:
+The trick then is that `collab-commit` doesn't encompass all git functionality, so you can't just point RubyMine directly at it, you need something in the middle that will use `collab-commit` if the first arg is `commit`, otherwise just pass through. Here's a ruby script to do just that:
 ```ruby
 #!/usr/bin/env ruby
 
 exit_code = if ARGV[1] == "commit"
-  system "git pair-commit #{ARGV[1..-1].join(" ")}"
+  system "git collab-commit #{ARGV[1..-1].join(" ")}"
 else
   system "git #{ARGV.join(" ")}"
 end
@@ -98,7 +98,7 @@ Authors
 Copyright (c) 2010 [Pivotal Labs](http://pivotallabs.com). This software is licensed under the MIT License.
 
 ### [Contributors](https://github.com/pivotal/git_scripts/contributors)
- - git-pair original author [Bryan Helmkamp](http://brynary.com)
+ - git-collab original author [Bryan Helmkamp](http://brynary.com)
  - lots of pivots :)
  - [James Sanders](https://github.com/jsanders)
  - [Todd Persen](https://github.com/toddboom)
