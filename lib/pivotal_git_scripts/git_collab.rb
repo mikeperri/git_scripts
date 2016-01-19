@@ -31,7 +31,7 @@ module PivotalGitScripts
           author_names, email_ids = extract_author_names_and_email_ids_from_config(config, initials)
           authors = collab_names(author_names)
           git_config = {:name => authors,  :initials => initials.sort.join(" ")}
-          git_config[:email] = build_email(email_ids, config["email"]) unless no_email(config)
+          # git_config[:email] = build_email(email_ids, config["email"]) unless no_email(config)
           set_git_config global,  git_config
         else
           git_config = {:name => nil,  :initials => nil}
