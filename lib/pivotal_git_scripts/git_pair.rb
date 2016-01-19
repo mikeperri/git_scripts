@@ -244,7 +244,7 @@ BANNER
       private
 
       def pair_names(author_names)
-        [author_names[0..-2].join(", "), author_names.last].reject(&:empty?).join(" and ")
+        [author_names[0..-2].join(" x "), author_names.last].reject(&:empty?).join(" x ")
       end
     end
   end
